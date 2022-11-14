@@ -10,13 +10,13 @@ import java.util.List;
 public class AmbiguousCoordinates {
 
     public static void main(String[] args) {
-        new AmbiguousCoordinates().ambiguousCoordinates("1234");
+        System.out.println(new AmbiguousCoordinates().ambiguousCoordinates("012340"));
     }
 
     public List<String> ambiguousCoordinates(String s) {
 
         List<String> ambiguousCoordinates = new ArrayList<>();
-        /** 分出的字串不能全是0, 除非只有一个*/
+        /** 分出的字串不能全是0, 除非只有一个 */
         for (int j = 1; j < s.length(); j++) {
             String pre = s.substring(0, j);
             String post = s.substring(j, s.length());
@@ -33,6 +33,12 @@ public class AmbiguousCoordinates {
     }
 
     private void combin(List<String> preList, List<String> postList, List<String> ambiguousCoordinates) {
+        for (int i = 0; i < preList.size(); i++) {
+
+            for (int j = 0; j < postList.size(); j++) {
+                ambiguousCoordinates.add("(" + preList.get(i) + ", " + postList.get(j) + ")");
+            }
+        }
     }
 
     /** 不能全为0,除非只有一位 . 不能全为0
@@ -42,14 +48,22 @@ public class AmbiguousCoordinates {
     private List<String> generateList(String candiate) {
         List<String> result = new ArrayList<>();
         if (candiate.charAt(0) == '0') {
-            result.add(candiate.substring(0, 1) + "." + candiate.substring(1, candiate.length()));
+            if (candiate.length() > 1) {
+                result.add(candiate.substring(0, 1) + "." + candiate.substring(1, candiate.length()));
+            } else {
+                result.add(candiate);
+            }
             return result;
         }
-        for (int i = candiate.length(); i < candiate.length(); i++) {
-            if () {
+        result.add(candiate);
 
-            }
+        if (candiate.charAt(candiate.length() - 1) == '0') {
+            return result;
         }
+        for (int i = candiate.length() - 1; i > 0; i--) {
+            result.add(candiate.substring(0, i) + "." + candiate.substring(i, candiate.length()));
+        }
+        return result;
     }
 
     /**
