@@ -1,4 +1,4 @@
-package com.xiexinhai8.base_alg.tow_pointers;
+package com.xiexinhai8.base_alg.two_pointers;
 
 /**
  * 777. 在LR字符串中交换相邻字符

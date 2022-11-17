@@ -1,4 +1,4 @@
-package com.xiexinhai8.base_alg.tow_pointers;
+package com.xiexinhai8.base_alg.two_pointers;
 
 import java.util.ArrayList;
 import java.util.List;
