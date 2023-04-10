@@ -1,16 +1,7 @@
 package com.xiexinhai8.base_alg;
 
-import java.util.*;
-class ListNode {
-    int val;
-    ListNode next;
-    public ListNode() {
 
-    }
-    public ListNode(int val) {
-        this.val = val;
-    }
-}
+import com.xiexinhai8.base_alg.entity.ListNode;
 
 public class So {
     public static void main(String[] args) {
