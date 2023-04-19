@@ -31,15 +31,14 @@ public class MaxSumAfterPartitioning {
 
         int[] d = new int[arr.length + 1];
         d[0] = 0;
-        d[1] = arr[0];
 
-        for (int i = 1; i < arr.length; i++) {
-            int maxVal = arr[i];
-            for (int j = i; j > 0 && j > i - 4; j--) {
+        for (int i = 0; i < arr.length; i++) {
+            int maxVal = Integer.MIN_VALUE;
+            for (int j = i; j >= 0 && j > i - k; j--) {
                 if (maxVal < arr[j]) {
                     maxVal = arr[j];
                 }
-                d[i] = Math.max(d[i], d[j] + maxVal * (i - j + 1));
+                d[i + 1] = Math.max(d[i + 1], d[j] + maxVal * (i - j + 1));
             }
         }
 
