@@ -1,6 +1,7 @@
 package com.xiexinhai8.base_alg.math;
 
 /**
+ * 1093. 大样本统计
  *
  * 我们对 0 到 255 之间的整数进行采样，并将结果存储在数组 count 中：count[k] 就是整数 k 在样本中出现的次数。
  *
