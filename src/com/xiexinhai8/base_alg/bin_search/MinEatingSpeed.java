@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * 875. 爱吃香蕉的珂珂
- * 
+ *
  * 珂珂喜欢吃香蕉。这里有 n 堆香蕉，第 i 堆中有 piles[i] 根香蕉。警卫已经离开了，将在 h 小时后回来。
  *
  * 珂珂可以决定她吃香蕉的速度 k （单位：根/小时）。每个小时，她将会选择一堆香蕉，从中吃掉 k 根。如果这堆香蕉少于 k 根，她将吃掉这堆的所有香蕉，然后这一小时内不会再吃更多的香蕉。
@@ -50,12 +50,18 @@ public class MinEatingSpeed {
 
     private boolean tryEat(int[] piles, int speed, int totalTime) {
         int eatTime = 0;
-        for (int i = 0; i < piles.length; i++) {
-            eatTime += Math.ceil(piles[i] * 1.0 / speed);
+        int i = piles.length - 1;
+        for (; i >= 0; i--) {
+            int times = (int)Math.ceil(piles[i] * 1.0 / speed);
+            eatTime += times;
             if (eatTime > totalTime) {
                 return false;
             }
+            if (times == 1) {
+                eatTime += i;
+                break;
+            }
         }
-        return true;
+        return eatTime > totalTime? false : true;
     }
 }
