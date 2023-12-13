@@ -1,5 +1,10 @@
 package com.xiexinhai8.base_alg.stack.monotonic;
 
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Deque;
+import java.util.PriorityQueue;
+
 /**
  * TODO 2454. 下一个更大元素 IV
  *
@@ -21,7 +26,28 @@ package com.xiexinhai8.base_alg.stack.monotonic;
 public class SecondGreaterElement {
 
     public int[] secondGreaterElement(int[] nums) {
-        return null;
+        Deque<Integer> stack = new ArrayDeque<>();
+        PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> a[1] - b[1]);
+        int[] ans = new int[nums.length];
+        // Arrays.setAll(ans, a -> -1);
+        Arrays.fill(ans, -1);
+
+        for (int i = 0; i < nums.length; i++) {
+
+            while (!queue.isEmpty() && nums[queue.peek()[0]] < nums[i]) {
+                int[] index = queue.poll();
+                ans[index[0]] = nums[i];
+            }
+
+            while(!stack.isEmpty() && nums[stack.peek()] < nums[i]) {
+                int index = stack.pop();
+                queue.offer(new int[]{index, nums[index]});
+            }
+
+            stack.push(i);
+        }
+
+        return ans;
     }
 
 }
