@@ -1,5 +1,8 @@
 package com.xiexinhai8.base_alg.hash;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 447. 回旋镖的数量
  *
@@ -13,10 +16,27 @@ package com.xiexinhai8.base_alg.hash;
  */
 public class NumberOfBoomerangs {
 
+    public int numberOfBoomerangs(int[][] points) {
+        int num = 0;
+
+        for (int i = 0; i < points.length; i++) {
+            Map<Integer, Integer> disCounter = new HashMap<>();
+
+            for (int j = 0; j < points.length; j++) {
+                int dis = dis(points[i], points[j]);
+                int count = disCounter.getOrDefault(dis, 0);
+                num += (count * 2);
+                disCounter.put(dis, count + 1);
+            }
+        }
+
+        return num;
+    }
+
     /**
      *  暴力方法，时间复杂度0(n^3)
      */
-    public int numberOfBoomerangs(int[][] points) {
+    public int numberOfBoomerangs1(int[][] points) {
         int num = 0;
 
         for (int i = 0; i < points.length; i++) {
