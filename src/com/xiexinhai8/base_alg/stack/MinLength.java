@@ -24,14 +24,12 @@ public class MinLength {
 
         while (curIndex < s.length()) {
 
-            while(!stack.isEmpty() && curIndex < s.length() && valid(stack.peek(), curIndex, s)) {
+            if (!stack.isEmpty() && valid(stack.peek(), curIndex, s)) {
                 stack.pop();
-                curIndex++;
-            }
-            if (curIndex < s.length()) {
+            } else {
                 stack.push(curIndex);
-                curIndex++;
             }
+            curIndex++;
 
         }
 
