@@ -17,7 +17,7 @@ public class TwoEggDrop {
 
     /**
      f(n, 1) = n;
-     f(n, 2) = min{max{f(k, 1), f(n - k, 2)}} + 1
+     f(n, 2) = min{max{f(k - 1, 1), f(n - k, 2)}} + 1
 
      f(0 , 2) = 0;
      */
@@ -25,7 +25,7 @@ public class TwoEggDrop {
         int[][] f = new int[n + 1][3];
 
         for (int i = 0; i < f.length; i++) {
-            f[i][1] = i - 1;
+            f[i][1] = i;
         }
         f[0][2] = 0;
         f[1][2] = 1;
@@ -33,7 +33,7 @@ public class TwoEggDrop {
         for (int i = 2; i <= n; i++) {
             f[i][2] = Integer.MAX_VALUE;
             for (int j = 1; j <= i; j++) {
-                f[i][2] = Math.min(Math.max(f[j][1], f[i - j][2]), f[i][2]);
+                f[i][2] = Math.min(Math.max(f[j - 1][1], f[i - j][2]), f[i][2]);
             }
             f[i][2] += 1;
         }
