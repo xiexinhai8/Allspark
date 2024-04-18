@@ -46,7 +46,13 @@ public class SmallestDistancePair {
         for (int i = 0; i < nums.length - 1; i++) {
             int start = i + 1, end = nums.length - 1;
             int curTarget = target + nums[i];
+            //如果nums[start] > curTarget 则进行剪枝运算
             if (nums[start] > curTarget) {
+                continue;
+            }
+            // 如果nums[end] <= curTarget 则进行剪枝运算
+            if (nums[end] <= curTarget) {
+                total += end - i;
                 continue;
             }
             while (start < end) {
@@ -60,5 +66,11 @@ public class SmallestDistancePair {
             total += start - i;
         }
         return total;
+    }
+
+    private void print(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + ", ");
+        }
     }
 }
