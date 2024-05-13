@@ -1,5 +1,8 @@
 package com.xiexinhai8.base_alg.dynamic;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 1553. 吃掉 N 个橘子的最少天数
  *
@@ -16,6 +19,24 @@ package com.xiexinhai8.base_alg.dynamic;
  */
 public class MinDays {
 
+    /**
+     * 记忆化搜索
+     *
+     * f(i) = Math.min{f(i / 2) + i % 2, f(i / 3) + i % 3} + 1
+     * f(1) = 1
+     */
+    Map<Integer, Integer> map = new HashMap<>();
+    public int minDays(int n) {
+        if (n <= 1) {
+            return n;
+        }
+        if (map.get(n) == null) {
+            map.put(n, Math.min(minDays(n / 2) + n % 2, minDays(n / 3) + n % 3) + 1);
+        }
+
+        return map.get(n);
+    }
+
 
     /**
      * 动态规划
@@ -24,7 +45,7 @@ public class MinDays {
      *
      * 问题: 由于橘子数量太大 n <= 2*10^9; 导致超出内存限制
      */
-    public int minDays(int n) {
+    public int minDays_dp(int n) {
         int[] f = new int[n + 1];
         f[1] = 1;
 
