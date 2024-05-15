@@ -16,7 +16,7 @@ import java.util.Arrays;
  */
 public class FindTheCity {
 
-    int NO_GOT = Integer.MAX_VALUE / 2;
+    int NO_LINK = Integer.MAX_VALUE;
 
     /**
      * 计算图中所有点的最短距离使用 floyd 算法
@@ -24,34 +24,7 @@ public class FindTheCity {
      */
     public int findTheCity(int n, int[][] edges, int distanceThreshold) {
         // 构建邻接矩阵
-        int[][] adj = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            Arrays.fill(adj[i], NO_GOT);
-        }
-        for (int i = 0; i < edges.length; i++) {
-            int from = edges[i][0];
-            int to = edges[i][1];
-            int distance = edges[i][2];
-            adj[from][to] = distance;
-            adj[to][from] = distance;
-        }
-
-        // 遍历所有中间节点并更新邻接矩阵
-        for (int i = 0; i < n; i++) {
-
-            for (int in = 0; in < n; in++) {
-                // 如果入度和中间节点没有连通, 剪枝
-                if (adj[in][i] == NO_GOT) {
-                    continue;
-                }
-                for (int out = 0; out < n; out++) {
-                    // 如果入度和出度都有连接, 更新邻接矩阵
-                    if (in != out && adj[i][out] != NO_GOT) {
-                        adj[in][out] = Math.min(adj[in][out], adj[in][i] + adj[i][out]);
-                    }
-                }
-            }
-        }
+        int[][] adj = floyd(n, edges);
 
         int minNum = n;
         int cityName = -1;
@@ -72,5 +45,45 @@ public class FindTheCity {
         }
 
         return cityName;
+    }
+
+    /**
+     * floyd 算法
+     * @param n
+     * @param edges
+     * @return
+     */
+    private int[][] floyd(int n, int[][] edges) {
+        // 构建邻接矩阵
+        int[][] adj = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(adj[i], NO_LINK);
+        }
+        for (int i = 0; i < edges.length; i++) {
+            int from = edges[i][0];
+            int to = edges[i][1];
+            int distance = edges[i][2];
+            adj[from][to] = distance;
+            adj[to][from] = distance;
+        }
+
+        // 遍历所有中间节点并更新邻接矩阵
+        for (int link = 0; link < n; link++) {
+
+            for (int in = 0; in < n; in++) {
+                // 如果入度和中间节点没有连通, 剪枝
+                if (adj[in][link] == NO_LINK) {
+                    continue;
+                }
+                for (int out = 0; out < n; out++) {
+                    // 如果入度和出度都有连接, 更新邻接矩阵
+                    if (in == out || adj[link][out] == NO_LINK) {
+                        continue;
+                    }
+                    adj[in][out] = Math.min(adj[in][out], adj[in][link] + adj[link][out]);
+                }
+            }
+        }
+        return adj;
     }
 }
