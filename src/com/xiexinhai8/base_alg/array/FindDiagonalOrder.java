@@ -1,4 +1,4 @@
-package com.xiexinhai8.base_alg.zijie;
+package com.xiexinhai8.base_alg.array;
 
 import java.util.ArrayList;
 import java.util.List;
