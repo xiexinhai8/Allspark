@@ -34,6 +34,7 @@ public class FindTargetSumWays {
     // f(n, psum) = f(n - 1, psum - nums[n]) + f(n - 1, psum);
     private int findPlusSum(int[] nums, int pSum) {
         int[][] f = new int[pSum + 1][nums.length + 1];
+        // 如果候选集中没有0元素，则可以使用下面的初始化
         // Arrays.fill(f[0], 1);
         f[0][0] = 1;
         for (int i = 0; i <= pSum; i++) {
