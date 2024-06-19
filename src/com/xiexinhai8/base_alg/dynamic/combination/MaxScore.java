@@ -62,7 +62,7 @@ public class MaxScore {
 
         int max = f[0];
         for (int i = 1; i < nums.length; i++) {
-
+            f[i] = Integer.MIN_VALUE;
             for (int j = 0; j < i; j++) {
                 if ((nums[i] & 1) == (nums[j] & 1)) {
                     f[i] = Math.max(f[i], f[j] + nums[i]);
