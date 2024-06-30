@@ -1,5 +1,7 @@
 package com.xiexinhai8.base_alg.back_trace;
 
+import java.util.Arrays;
+
 /**
  * 494. 目标和
  *
@@ -32,5 +34,50 @@ public class FindTargetSumWays {
         }
 
         return bt(start + 1, nums, target + nums[start]) + bt(start + 1, nums, target - nums[start]);
+    }
+
+    /**
+     * 采用回溯的方式计算
+     * f(n, p) = f(n - 1, p) + f(n - 1, p - nums[n])
+     *  n < 0 or p < 0 f(n, p) = 0
+     *  p = 0 f(n, p) = 1
+     */
+
+    int[][] cache;
+    public int findTargetSumWays_2(int[] nums, int target) {
+        int sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+        }
+
+        sum += target;
+        // 必须增加sum < 0, 原因是target最小值为全选负号, sum最少也是0
+        if (sum < 0 || sum % 2 != 0) {
+            return 0;
+        }
+        target = sum / 2;
+
+        cache = new int[nums.length][target + 1];
+        for (int i = 0; i < cache.length; i++) {
+            Arrays.fill(cache[i], -1);
+        }
+        return bt(nums.length - 1, target, nums);
+    }
+
+    private int bt(int n, int target, int[] nums) {
+
+        if (n < 0 || target < 0) {
+            if (target == 0) {
+                return 1;
+            }
+            return 0;
+        }
+        if (cache[n][target] != -1) {
+            return cache[n][target];
+        }
+
+        int method = bt(n - 1, target, nums) + bt(n - 1, target - nums[n], nums);
+        cache[n][target] = method;
+        return method;
     }
 }
