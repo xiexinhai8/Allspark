@@ -92,4 +92,45 @@ public class MaxSumOfThreeSubarrays {
         }
         return result;
     }
+
+    /**
+     * 滑动窗口
+     */
+    public int[] maxSumOfThreeSubarrays2(int[] nums, int k) {
+        int[] prefix = new int[nums.length + 1];
+        for (int i = 0; i < nums.length; i++) {
+            prefix[i + 1] = prefix[i] + nums[i];
+        }
+
+        int maxVal3 = prefix[3 * k], curVal3 = maxVal3;
+        int maxVal2 = prefix[2 * k], curVal2 = maxVal2;
+        int maxVal1 = prefix[k], curVal1 = maxVal1;
+        int maxVal1Idx = 0;
+        int maxVal2Idx1 = 0, maxVal2Idx2 = k;
+        int maxVal3Idx1 = 0, maxVal3Idx2 = k, maxVal3Idx3 = 2 * k;
+
+        for (int i = 3 * k; i < nums.length; i++) {
+            curVal1 = prefix[i + 1 - 2 * k] - prefix[i + 1 - 3 * k];
+            if (curVal1 > maxVal1) {
+                maxVal1 = curVal1;
+                maxVal1Idx = i + 1 - 3 * k;
+            }
+            curVal2 = prefix[i + 1 - k] - prefix[i + 1 - 2 * k];
+            if (curVal2 + maxVal1 > maxVal2) {
+                maxVal2 = curVal2 + maxVal1;
+                maxVal2Idx2 = i + 1 - 2 * k;
+                maxVal2Idx1 = maxVal1Idx;
+            }
+            curVal3 = prefix[i + 1] - prefix[i + 1 - k];
+            if (maxVal2 + curVal3 > maxVal3) {
+                maxVal3 = maxVal2 + curVal3;
+                maxVal3Idx1 = maxVal2Idx1;
+                maxVal3Idx2 = maxVal2Idx2;
+                maxVal3Idx3 = i + 1 - k;
+            }
+        }
+
+        return new int[]{maxVal3Idx1, maxVal3Idx2, maxVal3Idx3};
+
+    }
 }
